@@ -1,0 +1,28 @@
+[
+  {
+    "name": "${name}",
+    "image": "${image}:${tag}",
+    "cpu": 0,
+    "networkMode": "awsvpc",
+    "essential": true,
+    "linuxParameters": {
+      "initProcessEnabled": true
+    },
+    "portMappings": [
+      {
+        "containerPort": ${containerPort
+        },
+        "hostPort": ${hostPort
+        }
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${awslogs_group}",
+        "awslogs-region": "${awslogs_region}",
+        "awslogs-stream-prefix": "${tag}"
+      }
+    }
+  }
+]
