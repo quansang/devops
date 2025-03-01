@@ -8,7 +8,7 @@ module "codebuild_app" {
   codebuild = {
     name         = "app"
     service_role = module.iam_role_codebuild.iam_role_arn
-    source       = { buildspec = "../../../devops-test/ops/buildspec.yml" }
+    source       = { buildspec = "./ops/buildspec.yml" }
     environment = {
       compute_type = "BUILD_GENERAL1_SMALL"
       image        = "aws/codebuild/standard:7.0-23.07.28"

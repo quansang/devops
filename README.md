@@ -1,4 +1,4 @@
-# DevOps Infra
+# DevOps
 
 ## How to do
 
@@ -58,24 +58,31 @@ terraform/
 ├── envs/
 │   ├── dev/
 │   └── prd/
-└── modules/
+└── modules/ # Terraform modules for all AWS services
 dependencies/
 ├── templates/
 ├── scripts/
 └── tests/
-application/
-├── ops/
-└── docker/
 ```
 
 ### Diagram
 
 ![Diagram](./images/diagram.png)
 
+- AWS Route53: Manage DNS Domain.
+- AWS InternetGateway: Allow traffic from Internet in/out VPC.
+- AWS NAT Gateway: All ECSs that into Private Subnet could access to Internet.
+- AWS ALB(Load Balancer) - External: Automatically distributes incoming traffic across multiple targets from Internet.
+- AWS ECS: At private subnet, running application on container in cluster.
+- AWS ECR: Managed container image registry service to push, pull and manage images.
+- AWS VPC: Appropriate firewall rules assigned via security groups and ACL enforce only certain traffic to pass thru to the subnet.
+
 ### CI/CD Pipeline
 
 ![CICD](./images/devops-test.png)
+All files in `devops-test/ops` are used for CI/CD pipeline.
 
+- CodePipeline: collaborating with AWS Codestar to connect to GitHub repository and trigger pipeline when push to repository in branch `main` of `devops-test`.
 - Codebuild:
   - Build image to ECR
   - Run Unit Testing: run pytest with built image by using docker container
@@ -84,3 +91,19 @@ application/
 - CodeDeploy:
   - Get artifact from CodeBuild include image detail and task definition of application
   - Deploy to ECS Fargate(Blue/Green Strategy)
+
+### Results
+
+#### Pipeline
+
+![Codepipeline](./images/codepipeline.png)
+
+#### Blue-green Deployment
+
+![Blue-green Deployment](./images/bluegreen-deployment.png)
+
+#### Application
+
+![Root-route](./images/root-route.png)
+
+![Healthcheck-route](./images/healthcheck-route.png)

@@ -1,8 +1,8 @@
 project     = "project"
 env         = "prd"
-branch_name = "master"
+branch_name = "main"
 repo_name = {
-  app = "quansang/devops"
+  app = "quansang/devops-test"
 }
 region        = "us-east-1"
 account_id    = "xxx"
